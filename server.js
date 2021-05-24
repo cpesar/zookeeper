@@ -13,7 +13,7 @@ const app = express();
 
 // app.get('/api/animals', (req, res) => {
 //   //use the send () method if we want to send short messages
-//   //use json to send lots of JSON, like API's
+//   //use json to send lots of JSON, like API
 //   //pass in the animals data from the data folder and it will return all of the json data
 //   res.json(animals);
 // });
@@ -82,6 +82,32 @@ app.get('/api/animals', (req, res) => {
   }
   res.json(results);
 });
+
+
+
+
+
+
+
+//HANDLE REQUESTS FOR A SPECIFIC ANIMAL
+function findById(id, animalsArray){
+  const result = animalsArray.filter(animal => animal.id === id)[0];
+  return result;
+}
+
+//HANDLE REQUESTS FOR A SPECIFIC ANIMAL
+app.get('/api/animals/:id', (req, res) => {
+  const result = findById(req.params.id, animals);
+  if(result){
+    res.json(result);
+  } else {
+    res.send(404);
+  }
+});
+
+
+
+
 
 
 //METHOD TO MAKE THE SERVER LISTEN
