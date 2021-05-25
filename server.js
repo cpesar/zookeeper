@@ -10,6 +10,8 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 
+//WHEN ENTERING JSON DATA USING EXPRESS:
+    //MUST USE DOUBLE QUOTES " " AND NAMES MUST BE STRINGS
 
           //MIDDLEWARE- 
   //Both of these functions are needed every time you create a server to POST data
@@ -21,8 +23,12 @@ app.use(express.urlencoded({ extended: true }));
 //express.json() method takes incoming POST data in the form of a JSON object and parses it into the req.body javascript object
 app.use(express.json());
 
-
-
+//SERVE STATIC FILES
+  //Added middleware to the server
+  //express.static() instructs the server to make the files public 
+  //Allows all of the front-end CSS and javascript to be accessed
+  //USE THIS MIDDLEWARE ANYTIME WE CREATE A SERVER THAT HAS BOTH JSON DATA AND FRONT-END CODE
+app.use(express.static('public'));
 
 //ROUTE THAT THE FRONT END CAN REQUEST DATA FROM
   //get() method requires 2 arguments:
@@ -184,7 +190,19 @@ function validateAnimal(animal) {
 }
 
 
-//MUST USE DOUBLE QUOTES " " AND NAMES MUST BE STRINGS
+
+
+                  //ADD A ROUTE
+      //  '/' takes us to the root route of the server- the route used to create a homepage for a server
+      //The only thing this route does is respond with an HTML page to display in the browser
+      //Use the path module to ensure that we are sending to the correct location
+      //res.sendFile() has all the built in features for serving to an HTML page
+app.get('/', (req,res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+
+
 
 //METHOD TO MAKE THE SERVER LISTEN
 app.listen(PORT, () => {
