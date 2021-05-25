@@ -2,9 +2,27 @@
 const express = require('express');
 const { animals } = require('./data/animals.json');
 
+const fs = require('fs');
+const path = require('path');
+
 const PORT = process.env.PORT || 3001;
 //INSTANTIATE THE SERVER
 const app = express();
+
+
+
+          //MIDDLEWARE- 
+  //Both of these functions are needed every time you create a server to POST data
+// parse incoming string or array data
+//express.urlencoded is a built in express.js method
+    //takes incoming POST data and converts it to key/value pairs
+app.use(express.urlencoded({ extended: true }));
+// parse incoming JSON data
+//express.json() method takes incoming POST data in the form of a JSON object and parses it into the req.body javascript object
+app.use(express.json());
+
+
+
 
 //ROUTE THAT THE FRONT END CAN REQUEST DATA FROM
   //get() method requires 2 arguments:
@@ -105,10 +123,68 @@ app.get('/api/animals/:id', (req, res) => {
   }
 });
 
+//FUNCTION TO HANDLE ANIMAL CREATION
+function createNewAnimal(body, animalsArray) {
+  const animal = body;
+  animalsArray.push(animal);
+  // our function's main code will go here!
+  fs.writeFileSync(
+    path.join(__dirname, './data/animals.json'),
+        //save the javascript data as JSON, so we need to convert it
+          //the null argument means we don't want to edit any existing data
+          //the 2 indicates that we want to make whitespace to make it more readable
+    JSON.stringify({ animals: animalsArray }, null, 2)
+  );
+  // return finished code to post route for response
+  return animal;
+}
+
+
+
+//LISTENS FOR POST REQUESTS
+  //Represent the action of a client requesting the server to accept data
+// app.post('/api/animals', (req, res) => {
+//   //req body is where our incoming content will be
+//   console.log(req.body);
+//   res.json(req.body);
+// });
+
+app.post('/api/animals', (req, res) => {
+  //set id based on what the next index of the array will be
+  req.body.id = animals.length.toString();
+
+  //if data in req.body is incorrect, send 400 error back
+  if(!validateAnimal(req.body)){
+    res.status(400).send('The animal is not properly formatted.');
+  } else {
+     // add animal to json file and animals array in this function
+    const animal = createNewAnimal(req.body, animals);
+    res.json(animal);
+  }
+});
 
 
 
 
+//VALIDATE THE DATA
+function validateAnimal(animal) {
+  if (!animal.name || typeof animal.name !== 'string') {
+    return false;
+  }
+  if (!animal.species || typeof animal.species !== 'string') {
+    return false;
+  }
+  if (!animal.diet || typeof animal.diet !== 'string') {
+    return false;
+  }
+  if (!animal.personalityTraits || !Array.isArray(animal.personalityTraits)) {
+    return false;
+  }
+  return true;
+}
+
+
+//MUST USE DOUBLE QUOTES " " AND NAMES MUST BE STRINGS
 
 //METHOD TO MAKE THE SERVER LISTEN
 app.listen(PORT, () => {
