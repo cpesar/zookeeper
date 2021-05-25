@@ -126,6 +126,13 @@
         "hungry"
       ],
       "id": "12"
+    },
+    {
+      "name": "Larry",
+      "species": "Bear",
+      "diet": "herbivore",
+      "personalityTraits": [],
+      "id": "13"
     }
   ]
 }
