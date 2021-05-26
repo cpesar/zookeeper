@@ -2,7 +2,7 @@
 //START AN INSTANCE OF ROUTER
 const router = require('express').Router();
 
-//IMPORT FUNCTIONS FROM lib/animals/js FILE
+//IMPORT FUNCTIONS FROM lib/animals.js FILE
 const { filterByQuery, findById, createNewAnimal, validateAnimal } = require('../../lib/animals');
 const { animals } = require('../../data/animals');
 

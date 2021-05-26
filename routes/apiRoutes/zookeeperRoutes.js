@@ -1,0 +1,50 @@
+//START AN INSTANCE OF ROUTER
+const router = require('express').Router();
+
+//IMPORT FUNCTIONS FROM lib/zookeepers.js FILE
+const { filterByQuery, findById, createNewZookeeper, validateZookeeper } = require('../../lib/zookeepers');
+const { zookeepers } = require('../../data/zookeepers');
+
+//HANDLE ROUTES FOR ALL ZOOKEEPERS
+    //----filterByQuery() api route----
+// app.get('/zookeepers', (req, res) => {
+  router.get('/zookeepers', (req, res) => {
+    let results = zookeepers;
+    if(req.query){
+      results = filterByQuery(req.query, results);
+    }
+    res.json(results);
+  });
+
+  //HANDLE REQUESTS FOR A SPECIFIC ZOOKEEPER
+        //---findById() api route
+// app.get('/zookeepers/:id', (req, res) => {
+router.get('/zookeepers/:id', (req, res) => {
+  const result = findById(req.params.id, zookeepers);
+  if(result){
+    res.json(result);
+  } else {
+    res.send(404);
+  }
+});
+
+
+
+    //-----POST Routes----
+// app.post('/zookeepers', (req, res) => {
+  router.post('/zookeepers', (req, res) => {
+    //set id based on what the next index of the array will be
+    req.body.id = zookeepers.length.toString();
+  
+    //if data in req.body is incorrect, send 400 error back
+    if(!validateZookeeper(req.body)){
+      res.status(400).send('The zookeeper is not properly formatted.');
+    } else {
+       // add zookeeper to json file and zookeepers array in this function
+      const zookeeper = createNewZookeeper(req.body, zookeepers);
+      res.json(zookeeper);
+    }
+  });
+
+  //EXPORT THE ROUTER
+module.exports = router;
