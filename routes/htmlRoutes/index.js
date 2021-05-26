@@ -12,7 +12,7 @@ const router = require('express').Router();
 //GET ROUTE TO SERVE INDEX.HTML PAGE
 // app.get('/', (req,res) => {
   router.get('/', (req,res) => {
-    res.sendFile(path.join(__dirname, './public/index.html'));
+    res.sendFile(path.join(__dirname, '../../public/index.html'));
   });
   
   //GET ROUTE TO SERVE ANIMALS.HTML

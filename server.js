@@ -24,6 +24,15 @@ const htmlRoutes = require('./routes/htmlRoutes');
 //express.urlencoded is a built in express.js method
     //takes incoming POST data and converts it to key/value pairs
 app.use(express.urlencoded({ extended: true }));
+
+//-------
+//SERVE STATIC FILES
+  //Added middleware to the server
+  //express.static() instructs the server to make the files public 
+  //Allows all of the front-end CSS and javascript to be accessed
+  //USE THIS MIDDLEWARE ANYTIME WE CREATE A SERVER THAT HAS BOTH JSON DATA AND FRONT-END CODE
+  app.use(express.static('public'));
+//---------
 // parse incoming JSON data
 //express.json() method takes incoming POST data in the form of a JSON object and parses it into the req.body javascript object
 app.use(express.json());
