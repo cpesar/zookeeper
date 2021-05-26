@@ -9,6 +9,9 @@ const {
 } = require("../lib/animals.js");
 const{ animals } = require("../data/animals");
 
+//mock fs so that we don't accidentally create new animals every time we run a test
+jest.mock('fs');
+
 //ANIMAL OBJECT TEST
 test("creates an animal object", () => {
   const animal = createNewAnimal(
