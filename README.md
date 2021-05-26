@@ -6,7 +6,8 @@
   ## Description
   In this application I created a web server using the Express.js framework. It was then added to a front-end application called, Zoo Keeper. The application handles GET requests as well as client-side POST requests as well as static HTML files. I have deployed the application on the Heroku platform.
   <br />
-  [Zookeeper](https://dashboard.heroku.com/apps/fast-dusk-60329)
+  <br />
+  [Click here to view Zookeeper](https://dashboard.heroku.com/apps/fast-dusk-60329)
    <br />
   
   
