@@ -74,23 +74,6 @@ app.use(express.static('public'));
 //   return filteredResults;
 
 
-
-         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //LISTENS FOR POST REQUESTS
   //Represent the action of a client requesting the server to accept data
 // app.post('/api/animals', (req, res) => {
@@ -98,18 +81,6 @@ app.use(express.static('public'));
 //   console.log(req.body);
 //   res.json(req.body);
 // });
-
-
-
-
-
-
-
-
-
-
-   
-
 
 
 //METHOD TO MAKE THE SERVER LISTEN
